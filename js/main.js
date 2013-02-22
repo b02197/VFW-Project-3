@@ -1,5 +1,5 @@
 //Michael Eaton
-//Project 2 js
+//Project 3 js
 //term1302
 
 //Wait until DOM is loaded
@@ -100,6 +100,7 @@ function togCont(n){
       $('item').style.display = "block";
       for(var i=0, j=localStorage.length; i<j; i++){
          var createli = document.createElement('li');
+         var linkLi = document.createElement('li');
          createList.appendChild(createli);
          var key = localStorage.key(i);
          var value = localStorage.getItem(key);
@@ -111,9 +112,10 @@ function togCont(n){
             var createSubli = document.createElement('li');
             createSubList.appendChild(createSubli);
             var optSubText = infoObj[y] [0] +" "+ infoObj[y] [1];
-            createSubli.innerHTML = optSubText
+            createSubli.innerHTML = optSubText;
+            createSubList.appendChild(linkLi);
          }
-         
+         createItemLinks();  //Makes the edit and delete link for the items in LS
       }
     
    }
@@ -123,10 +125,40 @@ function togCont(n){
       alert("You have deleted the order.");
       window.location.reload();
 }
+/*
+function validate(e){
+   var getsName = $('sName');
+   var getTemp = $('temps');
+   
+   var errorArray = [];
+//Validation for name field  
+   if(getsName.value === "");{
+      var nameError = "Please enter your name.";
+      getsName.style.border = "1px soild red";
+      errorArray.push(nameError);
+   }
+//Validation for temp drop down
+   if(getTemp.value === "--Choose A Temp--");{
+      var tempError = "Please enter a temperature for the burger";
+      getTemp.style.border = "1px soild red";
+      errorArray.push(tempError);
+   }
+   //if there are errors, display them on the screen
+   if(errorArray.length >=1){
+      for(var i=0, j=errorArray.length; i<j; i++);
+         var txt = document.createElement('li');
+         txt.innnerHTML = errorArray[i];
+         errMsg.appendChild(txt);
+   }
+   
+}
+e.preventDefault();
+return false; */
 //Array for my temperature drop down
     var meatTemp = ["--Choose A Temp--", "Rare", "Med-Rare", "Medium", "Med-Well", "Well"],
          sideValue,
-         cheeseValue = "No";
+         cheeseValue = "No",
+         errMsg = $('errors');
     makeDrop();
     
 //links and submit button
@@ -136,6 +168,6 @@ function togCont(n){
    var clear = $('clear');
     clear.addEventListener("click", clearData);
     var save = $('submit');
-    save.addEventListener("click", saveData);
+    save.addEventListener("click", SaveData);
    
 });

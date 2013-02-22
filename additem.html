@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--Michael Eaton -->
-<!--Project 2 web app-->
+<!--Project 3 web app-->
 <!--1302-->
     <html>
         <head>
@@ -20,9 +20,10 @@
                 <a href="additem.html" id="addContent" style="display:none;">Add More Burgers</a>
             </nav>
             <form action="#" method="post" id="burgerMaker">
-                <fieldset>                       
+                <fieldset id="order">                       
                     <legend>Make A Burger</legend>
-                    <ul>
+                    <ul id="errors"></ul>
+                    <ul id="entery">
                         <li><label for="sName">Server Name:</label><input type="text" id="sName" /></li>
                         <li><label for="tDate">Today's Date:</label><input type="date" id="tDate"/></li>
                         <li><label for="tNum">Table Number</label><input type="range" name="tNum" min="1" max="50" id="tNum"/></li>
