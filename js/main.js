@@ -174,6 +174,43 @@ function togCont(n){
    }
    
    
+   function validate(e){
+      var getSname = $('sName');
+      var getTemps = $('temps');
+      
+      errMsg.innHTML = "";
+      getSname.style.border = "1px solid black";
+      getTemps.style.border = "1px solid black";
+      
+      var mesAry = [];
+      
+      if (getSname.value === ""){
+         var snameError = "Please enter your name.";
+         getSname.style.border = "1px solid red";
+         mesAry.push(snameError);
+      }
+      
+      if(getTemps.value === "--Choose A Temp--"){
+         var tempsError = "Please enter a temperature";
+         getTemps.style.border = "1px solid red";
+         mesAry.push(tempsError);
+      }
+      
+      if(mesAry.length >= 1){
+         for(var i=0, j=mesAry.length; i<j; i++){
+            var text = document.createElement('li');
+            text.innerHTML = mesAry[i];
+            errMsg.appendChild(text);
+         }
+         e.preventDefault();
+      }else{
+         storeData(this.key);
+      }
+      
+   }
+
+   
+   
 //function for clearing data
    function clearData(){
       localStorage.clear();
@@ -182,9 +219,7 @@ function togCont(n){
       return false;
 }
 
-function validate(){
-   
-}
+
 //Array for my temperature drop down
     var meatTemp = ["--Choose A Temp--", "Rare", "Med-Rare", "Medium", "Med-Well", "Well"],
          sideValue,
@@ -199,6 +234,6 @@ function validate(){
    var clear = $('clear');
     clear.addEventListener("click", clearData);
     var save = $('submit');
-    save.addEventListener("click", saveData);
+    save.addEventListener("click", validate);
    
 });
