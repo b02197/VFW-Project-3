@@ -65,7 +65,7 @@ function togCont(n){
       default:
          break;
       
-   }
+   } return false;
 }
 //saveData function
    function saveData(){
@@ -115,45 +115,76 @@ function togCont(n){
             createSubli.innerHTML = optSubText;
             createSubList.appendChild(linkLi);
          }
-         createItemLinks();  //Makes the edit and delete link for the items in LS
+         createItemLinks(localStorage.key(i), linkLi);  //Makes the edit and delete link for the items in LS
       }
-    
    }
+   
+// Function that makes the edit and delete link for items displayed 
+   function createItemLinks(key, linkLi){
+      var editLink = document.createElement('a');
+      editLink.href = "#";
+      editLink.key = key;
+      var editTxt = "Edit Order";
+      editLink.addEventListener("click", editItem);
+      editLink.innerHTML = editTxt;
+      linkLi.appendChild(editLink);
+      
+      var delLink = document.createElement('a');
+      delLink.href = "#";
+      delLink.key = key;
+      var delTxt = "Delete Order";
+     // delLink.addEventListener("click", delItem)
+      delLink.innerHTML = delTxt;
+      linkLi.appendChild(delLink)
+      
+      
+   }
+   
+   function editItem(){
+      var value = localStorage.getItem(this.key);
+      var item = JSON.parse(value);
+      
+      togCont("off");
+      
+      $('sName').value = item.sName[1];
+      $('tDate').value = item.tDate[1];
+      $('tNum').value = item.tNum[1];
+      $('temps').value = item.temps[1];
+      if(item.cheese[1] == "yes"){
+         $('cheese').setAttribute("checked", "checked");
+      }
+      $('cond').value = item.cond[1];
+      var radio = document.forms[0].side;
+      for(var i=0; i<radio.length; i++){
+         if(radio[i].value === "No Side" && item.side[1] === "No Side"){
+            radio[i].setAttribute("checked", "checked");
+         }else if(radio[i].value === "Fries" && item.side[1] === "Fries"){
+            radio[i].setAttribute("checked", "checked");
+            } else if(radio[i].value === "Onion Rings" && item.side[1] === "Onion Rings"){
+                  radio[i].setAttribute("checked", "checked");
+               }else if(radio[i].value === "Chips" && item.side[1] === "Chips"){
+                  radio[i].setAttribute("checked", "checked");
+               }
+      }
+      save.removeEventListener("click", saveData);
+      $('submit').value = "Edit Order";
+      var editSubmit = $('submit');
+      editSubmit.addEventListener("click",validate);
+      editSubmit.key = this.key;
+   }
+   
+   
 //function for clearing data
    function clearData(){
       localStorage.clear();
       alert("You have deleted the order.");
       window.location.reload();
+      return false;
 }
-/*
-function validate(e){
-   var getsName = $('sName');
-   var getTemp = $('temps');
-   
-   var errorArray = [];
-//Validation for name field  
-   if(getsName.value === "");{
-      var nameError = "Please enter your name.";
-      getsName.style.border = "1px soild red";
-      errorArray.push(nameError);
-   }
-//Validation for temp drop down
-   if(getTemp.value === "--Choose A Temp--");{
-      var tempError = "Please enter a temperature for the burger";
-      getTemp.style.border = "1px soild red";
-      errorArray.push(tempError);
-   }
-   //if there are errors, display them on the screen
-   if(errorArray.length >=1){
-      for(var i=0, j=errorArray.length; i<j; i++);
-         var txt = document.createElement('li');
-         txt.innnerHTML = errorArray[i];
-         errMsg.appendChild(txt);
-   }
+
+function validate(){
    
 }
-e.preventDefault();
-return false; */
 //Array for my temperature drop down
     var meatTemp = ["--Choose A Temp--", "Rare", "Med-Rare", "Medium", "Med-Well", "Well"],
          sideValue,
@@ -168,6 +199,6 @@ return false; */
    var clear = $('clear');
     clear.addEventListener("click", clearData);
     var save = $('submit');
-    save.addEventListener("click", SaveData);
+    save.addEventListener("click", saveData);
    
 });
