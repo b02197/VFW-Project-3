@@ -68,10 +68,14 @@ function togCont(n){
    } return false;
 }
 //saveData function
-   function saveData(){
+   function saveData(key){
+      if(key){
       var id = Math.floor(Math.random()*9999999)
+      }else{
+         id= key;
+      }
 //Gather all form field data in an object.
-//Object properies will contain an array wit hte form labal and input value.
+//Object properies will contain an array with the form labal and input value.
       getSelectedRadio();
       getCheckValue();
       var item = {};
@@ -135,7 +139,7 @@ function togCont(n){
       var delTxt = "Delete Order";
      // delLink.addEventListener("click", delItem)
       delLink.innerHTML = delTxt;
-      linkLi.appendChild(delLink)
+      linkLi.appendChild(delLink);
       
       
    }
