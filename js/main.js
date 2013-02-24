@@ -137,7 +137,7 @@ function togCont(n){
       delLink.href = "#";
       delLink.key = key;
       var delTxt = "Delete Order";
-     // delLink.addEventListener("click", delItem)
+      delLink.addEventListener("click", delItem)
       delLink.innerHTML = delTxt;
       linkLi.appendChild(delLink);
       
@@ -177,7 +177,27 @@ function togCont(n){
       editSubmit.key = this.key;
    }
    
+   function delItem(){
+      var ask = confirm("Are you sure you want to delete this order?");
+      if(ask){
+         localStorage.removeItem(this.key);
+         alert("The order was delete.")
+         window.location.reload();
+      }else{
+         alert("Order was not deleted.")
+         
+      }
+   }
    
+   //function for clearing data
+   function clearData(){
+      localStorage.clear();
+      alert("You have deleted the order.");
+      window.location.reload();
+      return false;
+}
+
+
    function validate(e){
       var getSname = $('sName');
       var getTemps = $('temps');
@@ -208,21 +228,10 @@ function togCont(n){
          }
          e.preventDefault();
       }else{
-         storeData(this.key);
+         saveData(this.key);
       }
       
    }
-
-   
-   
-//function for clearing data
-   function clearData(){
-      localStorage.clear();
-      alert("You have deleted the order.");
-      window.location.reload();
-      return false;
-}
-
 
 //Array for my temperature drop down
     var meatTemp = ["--Choose A Temp--", "Rare", "Med-Rare", "Medium", "Med-Well", "Well"],
